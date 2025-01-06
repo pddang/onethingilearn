@@ -47,7 +47,7 @@ jobs:
           password: ${{secrets.GITHUB_TOKEN}}
 
       - name: Build Docker Image
-        run: docker build --build-arg PAYLOAD_SECRET=${{secrets.PAYLOAD_SECRET}} DATABASE_URI=postgres://${{secrets.POSTGRES_USER}}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/${{secrets.POSTGRES_DB}} -t ghcr.io/${{ github.actor }}/learngrow:latest .
+        run: docker build --build-arg PAYLOAD_SECRET=${{secrets.PAYLOAD_SECRET}} --build-arg DATABASE_URI=postgres://${{secrets.POSTGRES_USER}}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/${{secrets.POSTGRES_DB}} -t ghcr.io/${{ github.actor }}/learngrow:latest .
 
       - name: Push Docker Image
         run: docker push ghcr.io/${{ github.actor }}/learngrow:latest
