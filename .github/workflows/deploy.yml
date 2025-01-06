@@ -23,7 +23,7 @@ jobs:
                 POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
 
             options: >-
-                --health-cmd="pg_isready -U your_postgres_user"
+                --health-cmd pg_isready
                 --health-interval=10s
                 --health-timeout=5s
                 --health-retries=5
@@ -36,7 +36,7 @@ jobs:
       - name: Wait for PostgreSQL to Be Ready
         run: |
           for i in {1..60}; do
-            pg_isready -h postgres -U $POSTGRES_USER && break
+            pg_isready -h localhost -U $POSTGRES_USER && break
             echo "Waiting for PostgreSQL..."
             sleep 2
           done
@@ -49,7 +49,11 @@ jobs:
           password: ${{secrets.GITHUB_TOKEN}}
 
       - name: Build Docker Image
-        run: docker build --build-arg PAYLOAD_SECRET=${{secrets.PAYLOAD_SECRET}} --build-arg DATABASE_URI=postgres://${{secrets.POSTGRES_USER}}:${{secrets.POSTGRES_PASSWORD}}@postgres:5432/${{secrets.POSTGRES_DB}} -t ghcr.io/${{ github.actor }}/learngrow:latest .
+        run: |
+            # testing db connection
+            psql -h localhost -U ${{secrets.POSTGRES_USER}} -d ${{POSTGRES_DB}} -c "SELECT 1"
+            
+            docker build --build-arg PAYLOAD_SECRET=${{secrets.PAYLOAD_SECRET}} --build-arg DATABASE_URI=postgres://${{secrets.POSTGRES_USER}}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/${{secrets.POSTGRES_DB}} -t ghcr.io/${{ github.actor }}/learngrow:latest .
    
       - name: Push Docker Image
         run: docker push ghcr.io/${{ github.actor }}/learngrow:latest
