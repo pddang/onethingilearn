@@ -34,6 +34,9 @@ COPY . .
 ARG PAYLOAD_SECRET
 ENV PAYLOAD_SECRET $PAYLOAD_SECRET
 
+ARG DATABASE_URI
+ENV DATABASE_URI $DATABASE_URI
+
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
