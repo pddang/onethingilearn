@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    image: ghcr.io/pddang/onethingilearn:latest
+    image: ghcr.io/pddang/learngrow:latest
     container_name: web
     depends_on:
       - db
@@ -20,7 +20,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always
-    
+
   caddy: 
     image: caddy:latest
     container_name: caddy

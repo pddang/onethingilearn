@@ -19,6 +19,7 @@ RUN \
   fi
 
 
+
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
@@ -29,6 +30,9 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
+
+ARG PAYLOAD_SECRET
+ENV PAYLOAD_SECRET $PAYLOAD_SECRET
 
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
