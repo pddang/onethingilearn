@@ -83,6 +83,9 @@ importers:
       payload-admin-bar:
         specifier: ^1.0.6
         version: 1.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      payload-plugin-comments:
+        specifier: ^1.0.2
+        version: 1.0.2
       prism-react-renderer:
         specifier: ^2.3.1
         version: 2.4.1(react@19.0.0)
@@ -3757,6 +3760,9 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  payload-plugin-comments@1.0.2:
+    resolution: {integrity: sha512-lqU8VhAJB0PrTeIRiWPsK+MqZeynEPWucUuV8cPmffyu5s6dFKn+MkXIn+WxE/Y2g1nQavdNmyOCvdNBv6GDmQ==}
 
   payload@3.9.0:
     resolution: {integrity: sha512-7RYx64ZHyEXJCgNpzGBgzpwDYCBRQUqKhfB8FhozQQ6OHn9uOHTn6htUngfx0/d0ijSdoDsK8cyMFD09xUfuPw==}
@@ -9232,6 +9238,8 @@ snapshots:
     dependencies:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
+
+  payload-plugin-comments@1.0.2: {}
 
   payload@3.9.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2):
     dependencies:
