@@ -81,15 +81,14 @@ jobs:
     
       - name: Deploy to production
         uses: appleboy/ssh-action@v1.2.0
-        env: 
-            REGISTRY=$REGISTRY
-            IMAGE_NAME=$IMAGE_NAME
-            IMAGE_TAG=$IMAGE_TAG
-            POSTGRES_USER=$POSTGRES_USER
-            POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-            POSTGRES_DB=$POSTGRES_DB
-            PAYLOAD_SECRET=$PAYLOAD_SECRET
-        
+        env:
+            POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+            POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+            PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+            REGISTRY: registry.digitalocean.com/learngrow
+            IMAGE_NAME: learngrow
+            IMAGE_TAG: latest
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
