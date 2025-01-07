@@ -67,10 +67,11 @@ jobs:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
           HOST: ${{ secrets.SERVER_HOST }}
           USER: ${{ secrets.SERVER_USERNAME }}
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "Copying files to server vmanage"
-          scp  -o StrictHostKeyChecking=no -r ./docker-compose.prod.yml ${USER}@${HOST}:/srv
-          ssh -o StrictHostKeyChecking=no -A -tt -p 22 ${USER}@${HOST} << EOF
+          scp -i $KEY -o StrictHostKeyChecking=no -r ./docker-compose.prod.yml ${USER}@${HOST}:/srv
+          ssh -i $KEY -o StrictHostKeyChecking=no -A -tt -p 22 ${USER}@${HOST} << EOF
           echo "Deploying to ${{ env.HOST }}"
           cd ~
           wget https://github.com/digitalocean/doctl/releases/download/v1.119.0/doctl-1.119.0-linux-amd64.tar.gz
