@@ -86,6 +86,7 @@ jobs:
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
             POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
             PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+
             REGISTRY: registry.digitalocean.com/learngrow
             IMAGE_NAME: learngrow
             IMAGE_TAG: latest
@@ -105,7 +106,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y docker-compose
 
-            doctl registry login --expiry-seconds 600  --access-token ${{ secrets.DIGITALOCEAN_ACCESS}}
+            doctl registry login --expiry-seconds 600 --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN}}
             cd /srv
             echo "Pulling latest image from digital ocean registry"
             docker pull $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
