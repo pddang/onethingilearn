@@ -69,23 +69,23 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-        script: |
-          echo "Copying docker-compose.prod.yml to server"
-          scp -r docker-compose.prod.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/srv
-          echo "Installing digital ocean CLI..."
-          cd ~
-          wget https://github.com/digitalocean/doctl/releases/download/v1.119.0/doctl-1.119.0-linux-amd64.tar.gz
-          tar xf ~/doctl-1.119.0-linux-amd64.tar.gz
-          sudo mv ~/doctl /usr/local/bin
-    
-          doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          cd /srv
-          echo "Pulling latest image from digital ocean registry"
-          docker pull $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
-          echo "Stopping and removing containers"
-          docker-compose -f docker-compose.prod.yml down
-          echo "Starting containers"
-          docker-compose -f docker-compose.prod.yml up -d
-          echo "Done!"
-          exit
+          script: |
+            echo "Copying docker-compose.prod.yml to server"
+            scp -r docker-compose.prod.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/srv
+            echo "Installing digital ocean CLI..."
+            cd ~
+            wget https://github.com/digitalocean/doctl/releases/download/v1.119.0/doctl-1.119.0-linux-amd64.tar.gz
+            tar xf ~/doctl-1.119.0-linux-amd64.tar.gz
+            sudo mv ~/doctl /usr/local/bin
         
+            doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            cd /srv
+            echo "Pulling latest image from digital ocean registry"
+            docker pull $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+            echo "Stopping and removing containers"
+            docker-compose -f docker-compose.prod.yml down
+            echo "Starting containers"
+            docker-compose -f docker-compose.prod.yml up -d
+            echo "Done!"
+            exit
+            
