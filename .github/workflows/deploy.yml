@@ -61,14 +61,30 @@ jobs:
 
       - name: Run registry garbage collection
         run: doctl registry garbage-collection start --include-untagged-manifests --force
-      
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            docker-compose down
-            docker-compose pull web
-            docker-compose -f docker-compose.prod.yml up -d 
+    
+    - name: Deploy to production
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+          HOST: ${{ secrets.SERVER_HOST }}
+          USER: ${{ secrets.SERVER_USERNAME }}
+        run: |
+          echo "Copying files to server vmanage"
+          scp  -o StrictHostKeyChecking=no -r ./docker-compose.prod.yml ${USER}@${HOST}:/srv
+          ssh -o StrictHostKeyChecking=no -A -tt -p 22 ${USER}@${HOST} << EOF
+          echo "Deploying to ${{ env.HOST }}"
+          cd ~
+          wget https://github.com/digitalocean/doctl/releases/download/v1.119.0/doctl-1.119.0-linux-amd64.tar.gz
+          tar xf ~/doctl-1.119.0-linux-amd64.tar.gz
+          sudo mv ~/doctl /usr/local/bin
+        
+          doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          cd /srv
+          echo "Pulling images"
+          docker pull $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+          echo "Stopping and removing containers"
+          docker-compose -f docker-compose.prod.yml down
+          echo "Starting containers"
+          docker-compose -f docker-compose.prod.yml up -d
+          echo "Done!"
+          exit
+          EOF

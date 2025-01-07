@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    image: ghcr.io/pddang/learngrow:latest
+    image: $REGISTRY/$IMAGE_NAME:latest
     container_name: web
     depends_on:
       - db
