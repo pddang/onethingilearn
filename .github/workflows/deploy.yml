@@ -81,7 +81,7 @@ jobs:
     
       - name: Deploy to production
         uses: appleboy/ssh-action@v1.2.0
-        envs: |
+        env: |
             REGISTRY=$REGISTRY
             IMAGE_NAME=$IMAGE_NAME
             IMAGE_TAG=$IMAGE_TAG
@@ -94,6 +94,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: REGISTRY,IMAGE_NAME,IMAGE_TAG,POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,PAYLOAD_SECRET
           script: |
 
             echo "Installing digital ocean CLI..."
