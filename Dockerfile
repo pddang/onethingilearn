@@ -37,6 +37,9 @@ ENV PAYLOAD_SECRET $PAYLOAD_SECRET
 ARG DATABASE_URI
 ENV DATABASE_URI $DATABASE_URI
 
+ARG NEXT_PUBLIC_SERVER_URL
+ENV NEXT_PUBLIC_SERVER_URL $NEXT_PUBLIC_SERVER_URL
+
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \

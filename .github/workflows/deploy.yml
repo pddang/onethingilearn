@@ -45,7 +45,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-            docker build --build-arg PAYLOAD_SECRET=${{secrets.PAYLOAD_SECRET}} --build-arg DATABASE_URI=postgres://${{secrets.POSTGRES_USER}}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/${{secrets.POSTGRES_DB}} --network host -t $REGISTRY/$IMAGE_NAME:$IMAGE_TAG .
+            docker build --build-arg NEXT_PUBLIC_SERVER_URL=${{secrets.NEXT_PUBLIC_SERVER_URL}} --build-arg PAYLOAD_SECRET=${{secrets.PAYLOAD_SECRET}} --build-arg DATABASE_URI=postgres://${{secrets.POSTGRES_USER}}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/${{secrets.POSTGRES_DB}} --network host -t $REGISTRY/$IMAGE_NAME:$IMAGE_TAG .
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
@@ -89,6 +89,7 @@ jobs:
             SMTP_HOST: ${{ secrets.SMTP_HOST }}
             SMTP_USER: ${{ secrets.SMTP_USER }}
             SMTP_PASS: ${{ secrets.SMTP_PASS }}
+            NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
             REGISTRY: registry.digitalocean.com/learngrow
             IMAGE_NAME: learngrow
             IMAGE_TAG: latest
