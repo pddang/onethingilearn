@@ -53,7 +53,7 @@ jobs:
             # testing db connection
             pg_isready -h localhost -U ${{secrets.POSTGRES_USER}} -d ${{secrets.POSTGRES_DB}}
             
-            docker build --build-arg PAYLOAD_SECRET=${{secrets.PAYLOAD_SECRET}} --build-arg DATABASE_URI=postgres://${{secrets.POSTGRES_USER}}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/${{secrets.POSTGRES_DB}} -t ghcr.io/${{ github.actor }}/learngrow:latest .
+            docker build --build-arg PAYLOAD_SECRET=${{secrets.PAYLOAD_SECRET}} --build-arg DATABASE_URI=postgres://${{secrets.POSTGRES_USER}}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/${{secrets.POSTGRES_DB}} --network host -t ghcr.io/${{ github.actor }}/learngrow:latest .
    
       - name: Push Docker Image
         run: docker push ghcr.io/${{ github.actor }}/learngrow:latest
