@@ -63,24 +63,24 @@ jobs:
         run: doctl registry garbage-collection start --include-untagged-manifests --force
     
       - name: Deploy to production
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-          HOST: ${{ secrets.SERVER_HOST }}
-          USER: ${{ secrets.SERVER_USERNAME }}
-          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          echo "Copying files to server vmanage"
-          scp -i $KEY -o StrictHostKeyChecking=no -r ./docker-compose.prod.yml ${USER}@${HOST}:/srv
-          ssh -i $KEY -o StrictHostKeyChecking=no -A -tt -p 22 ${USER}@${HOST} << EOF
-          echo "Deploying to ${{ env.HOST }}"
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+        script: |
+          echo "Copying docker-compose.prod.yml to server"
+          scp -r docker-compose.prod.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/srv
+          echo "Installing digital ocean CLI..."
           cd ~
           wget https://github.com/digitalocean/doctl/releases/download/v1.119.0/doctl-1.119.0-linux-amd64.tar.gz
           tar xf ~/doctl-1.119.0-linux-amd64.tar.gz
           sudo mv ~/doctl /usr/local/bin
-        
+    
           doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           cd /srv
-          echo "Pulling images"
+          echo "Pulling latest image from digital ocean registry"
           docker pull $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
           echo "Stopping and removing containers"
           docker-compose -f docker-compose.prod.yml down
@@ -88,4 +88,4 @@ jobs:
           docker-compose -f docker-compose.prod.yml up -d
           echo "Done!"
           exit
-          EOF
+        
