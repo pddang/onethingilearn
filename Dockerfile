@@ -56,7 +56,9 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # Remove this line if you do not have this folder
-COPY --from=builder /app/public ./public
+COPY --from=builder /app/public  /app/public
+RUN chown -R nextjs:nodejs /app/public
+
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
