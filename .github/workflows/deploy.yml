@@ -62,7 +62,7 @@ jobs:
       - name: Run registry garbage collection
         run: doctl registry garbage-collection start --include-untagged-manifests --force
     
-    - name: Deploy to production
+      - name: Deploy to production
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
           HOST: ${{ secrets.SERVER_HOST }}
