@@ -81,7 +81,7 @@ jobs:
     
       - name: Deploy to production
         uses: appleboy/ssh-action@v1.2.0
-        env: |
+        env: 
             REGISTRY=$REGISTRY
             IMAGE_NAME=$IMAGE_NAME
             IMAGE_TAG=$IMAGE_TAG
@@ -96,7 +96,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           envs: REGISTRY,IMAGE_NAME,IMAGE_TAG,POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,PAYLOAD_SECRET
           script: |
-
             echo "Installing digital ocean CLI..."
             cd ~
             wget https://github.com/digitalocean/doctl/releases/download/v1.119.0/doctl-1.119.0-linux-amd64.tar.gz
