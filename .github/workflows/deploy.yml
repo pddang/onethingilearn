@@ -60,7 +60,7 @@ jobs:
       - name: Run registry garbage collection
         run: doctl registry garbage-collection start --include-untagged-manifests --force
     
-deploy-to-production:
+  deploy-to-production:
     runs-on: ubuntu-latest
     needs: build-and-verify
     steps:
