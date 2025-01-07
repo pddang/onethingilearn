@@ -66,7 +66,14 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Transfer Files to Server
+        run: |
+          rsync -avz --exclude='.git' ./ ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/srv
+    
       - name: Deploy to production
         uses: appleboy/ssh-action@v1.2.0
         with:
@@ -74,15 +81,17 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "Sync code to server"
-            rsync -avz --delete --exclude='.git' --exclude='.github' $GITHUB_WORKSPACE/ ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/srv
 
             echo "Installing digital ocean CLI..."
             cd ~
             wget https://github.com/digitalocean/doctl/releases/download/v1.119.0/doctl-1.119.0-linux-amd64.tar.gz
             tar xf ~/doctl-1.119.0-linux-amd64.tar.gz
             sudo mv ~/doctl /usr/local/bin
-        
+
+            echo "Installing docker-compose..."
+            sudo apt-get update
+            sudo apt-get install -y docker-compose
+
             doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
             cd /srv
             echo "Pulling latest image from digital ocean registry"
