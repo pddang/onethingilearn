@@ -12,8 +12,8 @@ importers:
         specifier: 3.9.0
         version: 3.9.0(@types/react@19.0.1)(payload@3.9.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))(react@19.0.0)
       '@payloadcms/email-nodemailer':
-        specifier: ^3.15.0
-        version: 3.15.0(payload@3.9.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))
+        specifier: 3.9.0
+        version: 3.9.0(payload@3.9.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))
       '@payloadcms/live-preview-react':
         specifier: 3.9.0
         version: 3.9.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1289,12 +1289,6 @@ packages:
     resolution: {integrity: sha512-BIPFTdmq8Bl3VulilbnBB0NfIJ+EvGdh0a/+KqqOlOUGQaimKkELZnV3GDp1m0JYjn7ze4xIWR07JUTxdvSRhw==}
     peerDependencies:
       payload: 3.9.0
-
-  '@payloadcms/email-nodemailer@3.15.0':
-    resolution: {integrity: sha512-/qzSnQlH87zbyOF3foo+T1EZe+OW+sAVGIuXWvAWNvNCu5+TxR+MFO5sjnrZqSdveJNRnMaHXzavGAtwdBjTmw==}
-    engines: {node: ^18.20.2 || >=20.9.0}
-    peerDependencies:
-      payload: 3.15.0
 
   '@payloadcms/email-nodemailer@3.9.0':
     resolution: {integrity: sha512-tvk4/Co1/jL0v6I0jN9973TvfhA7iyxgbM5bs0crHcItKtCsIAcbrMyyuKmMvKPvOCPfDR+B5Edi3UVHgbmwOg==}
@@ -6286,11 +6280,6 @@ snapshots:
       - react
       - sql.js
       - sqlite3
-
-  '@payloadcms/email-nodemailer@3.15.0(payload@3.9.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))':
-    dependencies:
-      nodemailer: 6.9.10
-      payload: 3.9.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)
 
   '@payloadcms/email-nodemailer@3.9.0(payload@3.9.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))':
     dependencies:
