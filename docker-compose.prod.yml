@@ -13,7 +13,9 @@ services:
       - SMTP_HOST=${SMTP_HOST}
       - STMP_USER=${SMTP_USER}
       - SMTP_PASS=${SMTP_PASS}
-
+    volumes:
+      # persist public and media files to the host machine
+      - ./public:/app/public
   db:
     image: postgres:15
     container_name: postgres 
