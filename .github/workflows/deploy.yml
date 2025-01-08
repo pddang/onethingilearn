@@ -117,6 +117,6 @@ jobs:
             docker-compose -f docker-compose.prod.yml down
             echo "Starting containers"
             docker-compose -f docker-compose.prod.yml up -d
-            echo "Done!"
+            echo "Done! Application is now live"
             exit
             
