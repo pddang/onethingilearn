@@ -14,8 +14,7 @@ services:
       - STMP_USER=${SMTP_USER}
       - SMTP_PASS=${SMTP_PASS}
     volumes:
-      # persist public and media files to the host machine
-      - ./public:/app/public
+      - public:/app/public
   db:
     image: postgres:15
     container_name: postgres 
@@ -46,5 +45,6 @@ volumes:
   postgres_data:
   caddy_data:
   caddy_config:
+  public:
 
 
